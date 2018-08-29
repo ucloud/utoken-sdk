@@ -1,0 +1,9 @@
+{
+  "public_key": "xxxxxx",
+  "private_key": "xxxxx",
+  "region": "cn-bj2",
+  "zone": "cn-bj2-04",
+  "top_org_id": 2000005,
+  "project_id": 2000008,
+  "account_id": 2000007
+}
