@@ -8,27 +8,33 @@ class TokenAction(object):
 
 
 class TokenParam(object):
-    def __init__(self, client_id=0, top_orgid=0, project_id=0, account_id=0, token_name="", update_method=0, period=0, token_id=0):
+    def __init__(self, client_id="", project_id=0, token_name="", update_method=0, period=0, token_id=0):
+        if (not isinstance(client_id, str) and not isinstance(client_id, unicode)) \
+            or not isinstance(project_id, int) \
+            or (not isinstance(token_name, str) and not isinstance(token_name, unicode)) \
+            or not isinstance(update_method, int) \
+            or not isinstance(period, int)        \
+            or not isinstance(token_id, int):
+            raise Exception("Tokenparam initialize with invalid parameters")
         self._client_id = client_id
-        self._top_orgid = top_orgid
         self._project_id = project_id
-        self._account_id = account_id
         self._token_name = token_name
         self._update_method = update_method
         self._period = period
         self._token_id = token_id
 
-    def set(self, client_id=0, top_orgid=0, project_id=0, new_project_id=0, account_id=0, token_name="", update_method=0, period=0, token_id=0):
+    def set(self, client_id="", project_id=0, token_name="", update_method=0, period=0, token_id=0):
+        if (not isinstance(client_id, str) and not isinstance(client_id, unicode)) \
+            or not isinstance(project_id, int) \
+            or (not isinstance(token_name, str) and not isinstance(token_name, unicode)) \
+            or not isinstance(update_method, int) \
+            or not isinstance(period, int)        \
+            or not isinstance(token_id, int):
+            raise Exception("Tokenparam set with invalid parameters")
         if client_id:
             self._client_id = client_id
-        if top_orgid:
-            self._top_orgid = top_orgid
         if project_id:
             self._project_id = project_id
-        if new_project_id:
-            self._new_project_id = new_project_id
-        if account_id:
-            self._account_id = account_id
         if token_name:
             self._token_name = token_name
         if update_method:
@@ -38,20 +44,12 @@ class TokenParam(object):
         if token_id:
             self._token_id = token_id
 
-
     def get_create_param(self):
-        if not isinstance(self._top_orgid, int) or not self._top_orgid             \
-            or not isinstance(self._project_id, int) or not self._project_id       \
-            or not isinstance(self._account_id, int) or not self._account_id       \
-            or not isinstance(self._client_id, int) or not self._client_id         \
-            or not isinstance(self._token_name, str) or not self._token_name       \
-            or not isinstance(self._update_method, int) or not self._update_method \
-                or not isinstance(self._period, int) or not self._period:
+        if not self._project_id or not self._client_id or not self._token_name       \
+                or not self._update_method or not self._period:
             raise Exception("invalid params to create token")
         return {
-            "TopOrgID":     self._top_orgid,
             "ProjectID":    self._project_id,
-            "AccountID":    self._account_id,
             "ClientID":     self._client_id,
             "TokenName":    self._token_name,
             "UpdateMethod": self._update_method,
@@ -59,33 +57,21 @@ class TokenParam(object):
         }
 
     def get_update_param(self):
-        if not isinstance(self._client_id, int) or not self._client_id                \
-            or not isinstance(self._top_orgid, int) or not self._top_orgid            \
-            or not isinstance(self._project_id, int) or not self._project_id          \
-            or not isinstance(self._account_id, int) or not self._account_id          \
-            or not isinstance(self._token_id, int) or not self._account_id            \
-                or not isinstance(self._update_method, int) or not self._update_method:
+        if not self._client_id or not self._project_id or not self._token_id or not self._update_method:
             raise Exception("invalid params to update token")
         return {
             "ClientID":      self._client_id,
-            "TopOrgID":      self._top_orgid,
             "ProjectID":     self._project_id,
-            "AccountID":     self._account_id,
             "UpdateMethod":  self._update_method,
             "TokenID":       self._token_id
         }
 
     def get_query_param(self):
-        if not isinstance(self._client_id, int) or not self._client_id       \
-            or not isinstance(self._top_orgid, int) or not self._top_orgid   \
-            or not isinstance(self._account_id, int) or not self._account_id \
-                or not isinstance(self._project_id, int) or not self._project_id:
+        if not self._client_id or not self._project_id:
             raise Exception("invalid params to get token list")
         return {
             "ClientID":  self._client_id,
-            "TopOrgID":  self._top_orgid,
-            "ProjectID": self._project_id,
-            "AccountID": self._account_id
+            "ProjectID": self._project_id
         }
 
 

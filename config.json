@@ -1,9 +1,7 @@
 {
-  "public_key": "xxxxxx",
-  "private_key": "xxxxx",
+  "public_key": "+Ojgf38Wb+0sPYC62qm4wtKAeXhTpeNXU5n7hnQidyra4s6lfflxq3uHj0Q=",
+  "private_key": "+6tsqu8IQ1s17cQkpl8iFNDL1iKWpoMEtzhcnRaZ+mwl7V12cXHaerIbhJDX6lGt",
   "region": "cn-bj2",
   "zone": "cn-bj2-04",
-  "top_org_id": 2000005,
-  "project_id": 2000008,
-  "account_id": 2000007
+  "project_id": 200000860
 }

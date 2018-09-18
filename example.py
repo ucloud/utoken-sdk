@@ -3,7 +3,7 @@ import getopt
 import json
 import utoken
 
-options = ["cmd=", "client_name=", "description=", "client_id=", "new_project_id=",
+options = ["cmd=", "client_name=", "description=", "client_id=", "business_group=",
            "token_name=", "update_method=", "period=", "token_id="]
 cmd_options = ["create_client", "delete_client", "update_client", "get_client",
                "create_token", "update_token", "get_token"]
@@ -30,9 +30,9 @@ if __name__ == '__main__':
         elif name == "--description":
             params["description"] = value
         elif name == "--client_id":
-            params["client_id"] = int(value)
-        elif name == "--new_project_id":
-            params["new_project_id"] = int(value)
+            params["client_id"] = value
+        elif name == "--business_group":
+            params["business_group"] = value
         elif name == "--token_name":
             params["token_name"] = value
         elif name == "--update_method":
@@ -46,19 +46,19 @@ if __name__ == '__main__':
     with open('config.json', 'r') as fp:
         content = fp.read()
         config = json.loads(content)
-    sdk = utoken.UTokenSDK(public_key=config.get('public_key', ''),
-                           private_key=config.get('private_key', ''),
-                           region=config.get('region', ''),
-                           zone=config.get('zone', ''))
+    sdk = utoken.UTokenSDK(public_key=config.get('public_key', '').strip(),
+                           private_key=config.get('private_key', '').strip(),
+                           region=config.get('region', '').strip(),
+                           zone=config.get('zone', '').strip())
     print 'example set_params'
-    sdk.set_params(config.get('top_org_id', ''), config.get('project_id', ''), config.get('account_id', ''))
+    sdk.set_params(config.get('project_id', ''))
 
     if params["cmd"] == "create_client":
-        res = sdk.create_client(params["client_name"], params.get("description", ""))
+        res = sdk.create_client(params["client_name"], params.get("description", ""), params["business_group"])
     elif params["cmd"] == "delete_client":
         res = sdk.delete_client(params["client_id"])
     elif params["cmd"] == "update_client":
-        res = sdk.update_client(params["client_id"], params.get("client_name",""), params.get("description", ""), params.get("new_project_id", 0))
+        res = sdk.update_client(params["client_id"], params.get("client_name",""), params.get("description", ""), params.get("business_group", ""))
     elif params["cmd"] == "get_client":
         res = sdk.get_client()
     elif params["cmd"] == "create_token":

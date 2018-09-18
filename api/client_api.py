@@ -9,87 +9,72 @@ class ClientAction(object):
 
 
 class ClientParam(object):
-    def __init__(self, client_id=0, top_orgid=0, project_id=0, new_project_id=0, account_id=0, client_name="", description=""):
-        self._client_id = client_id
-        self._top_orgid = top_orgid
+    def __init__(self, client_id="", project_id=0, business_group="", client_name="", description=""):
+        if (not isinstance(client_id, str) and not isinstance(client_id, unicode)) \
+            or not isinstance(project_id, int) \
+            or (not isinstance(business_group, str) and not isinstance(business_group, unicode)) \
+            or (not isinstance(client_name, str) and not isinstance(client_name, unicode))    \
+                or (not isinstance(description, str) and not isinstance(description, unicode)):
+            raise Exception("ClientParam initialize with invalid parameters")
+        self._client_id = client_id.strip()
         self._project_id = project_id
-        self._new_project_id = new_project_id
-        self._account_id = account_id
-        self._client_name = client_name
-        self._description = description
+        self._business_group = business_group.strip()
+        self._client_name = client_name.strip()
+        self._description = description.strip()
 
-    def set(self, client_id=0, top_orgid=0, project_id=0, new_project_id=0, account_id=0, client_name="", description=""):
-        if client_id:
-            self._client_id = client_id
-        if top_orgid:
-            self._top_orgid = top_orgid
+    def set(self, client_id="", project_id=0, business_group="", client_name="", description=""):
+        if (not isinstance(client_id, str) and not isinstance(client_id, unicode)) \
+            or not isinstance(project_id, int) \
+            or (not isinstance(business_group, str) and not isinstance(business_group, unicode)) \
+            or (not isinstance(client_name, str) and not isinstance(client_name, unicode))    \
+                or (not isinstance(description, str) and not isinstance(description, unicode)):
+            raise Exception("ClientParam set with invalid parameters")
+        if client_id.strip():
+            self._client_id = client_id.strip()
         if project_id:
             self._project_id = project_id
-        if new_project_id:
-            self._new_project_id = new_project_id
-        if account_id:
-            self._account_id = account_id
-        if client_name:
-            self._client_name = client_name
-        if description:
-            self._description = description
-
+        if business_group.strip():
+            self._business_group = business_group.strip()
+        if client_name.strip():
+            self._client_name = client_name.strip()
+        if description.strip():
+            self._description = description.strip()
 
     def get_create_param(self):
-        if not isinstance(self._top_orgid, int) or not self._top_orgid       \
-            or not isinstance(self._project_id, int) or not self._project_id \
-            or not isinstance(self._account_id, int) or not self._account_id \
-                or not isinstance(self._client_name, str) or not self._client_name:
+        if not self._project_id or not self._business_group or not self._client_name:
             raise Exception("invalid params to create client")
         return {
-            "TopOrgID":    self._top_orgid,
             "ProjectID":   self._project_id,
-            "AccountID":   self._account_id,
             "ClientName":  self._client_name,
+            "BusinessGroup": self._business_group,
             "Description": self._description
         }
 
     def get_delete_param(self):
-        if not isinstance(self._client_id, int) or not self._client_id       \
-            or not isinstance(self._account_id, int) or not self._account_id \
-            or not isinstance(self._top_orgid, int) or not self._top_orgid   \
-                or not isinstance(self._project_id, int) or not self._project_id :
+        if not self._client_id or not self._project_id :
             raise Exception("invalid params to delete client")
         return {
             "ClientID":  self._client_id,
-            "AccountID": self._account_id,
-            "TopOrgID":  self._top_orgid,
             "ProjectID": self._project_id
         }
 
     def get_update_param(self):
-        if not isinstance(self._client_id, int) or not self._client_id                \
-            or not isinstance(self._top_orgid, int) or not self._top_orgid            \
-            or not isinstance(self._project_id, int) or not self._project_id          \
-            or not isinstance(self._account_id, int) or not self._account_id          \
-            or not isinstance(self._client_name, str)                                 \
-            or not isinstance(self._description, str)                                 \
-            or not isinstance(self._new_project_id, int)                              \
-                or (not self._client_name and not self._description and not self._new_project_id):
+        if not self._client_id or not self._project_id    \
+                or (not self._client_name and not self._description and not self._business_group):
             raise Exception("invalid params to update client")
         return {
             "ClientID":      self._client_id,
-            "TopOrgID":      self._top_orgid,
             "ProjectID":     self._project_id,
-            "AccountID":     self._account_id,
             "ClientName":    self._client_name,
             "Description":   self._description,
-            "NewProjectID":  self._new_project_id
+            "BusinessGroup":  self._business_group
         }
 
     def get_query_param(self):
-        if not isinstance(self._top_orgid, int) or not self._top_orgid        \
-                or not isinstance(self._project_id, int) or not self._project_id:
+        if not self._project_id:
             raise Exception("invalid params to get client info")
         return {
-            "TopOrgID": self._top_orgid,
-            "ProjectID": self._project_id,
-            "AccountID": self._account_id
+            "ProjectID": self._project_id
         }
 
 

@@ -13,15 +13,15 @@ class UTokenSDK(object):
         self._client_params = client_api.ClientParam()
         self._token_params = token_api.TokenParam()
 
-    def set_params(self, top_orgid, project_id, account_id):
-        self._client_params.set(top_orgid=top_orgid, project_id=project_id, account_id=account_id)
-        self._token_params.set(top_orgid=top_orgid, project_id=project_id, account_id=account_id)
+    def set_params(self, project_id):
+        self._client_params.set(project_id=project_id)
+        self._token_params.set(project_id=project_id)
 
     """ 1. client operation
     """
-    def create_client(self, client_name, description=""):
+    def create_client(self, client_name, description="", business_group=""):
         client_params = copy.deepcopy(self._client_params)
-        client_params.set(client_name=client_name, description=description)
+        client_params.set(client_name=client_name, description=description, business_group=business_group)
         print 'UTokenSDK create client'
         return self._client_instance.create(client_params)
 
@@ -30,10 +30,10 @@ class UTokenSDK(object):
         client_params.set(client_id=client_id)
         return self._client_instance.delete(client_params)
 
-    def update_client(self, client_id, client_name="", description="", new_project_id=0):
+    def update_client(self, client_id, client_name="", description="", business_group=""):
         client_params = copy.deepcopy(self._client_params)
         client_params.set(client_id=client_id, client_name=client_name,
-                                description=description, new_project_id=new_project_id)
+                                description=description, business_group=business_group)
         return self._client_instance.update(client_params)
 
     def get_client(self):
